@@ -56,6 +56,29 @@ policy.
 
 ## How evaluation and improvement work
 
+### Implementation hierarchy
+
+![Hierarchy of the deterministic improvement controller, routing agent, fixed evaluator, and checkpoint persistence](docs/diagrams/hierarchy.svg)
+
+The CLI calls one controller, which uses the routing agent, evaluator, and local
+checkpoint helpers. These are Python modules/functions, not separate LLM agents.
+The evaluator owns the labels and scoring; only allowlisted policy settings change.
+
+### Iteration and feedback
+
+![Bounded feedback loop from execution and evaluation through reflection, candidate validation, acceptance or rejection, and persistence](docs/diagrams/feedback-loop.svg)
+
+Each accepted strategy becomes the starting point for the next proposal.
+Rejections keep the previous strategy but still consume the proposal budget.
+The loop stops on a perfect development score, the total budget, or no useful
+untried candidate. The separate audit reports results without selecting changes.
+
+Editable diagrams: [hierarchy source](docs/diagrams/hierarchy.excalidraw) and
+[feedback-loop source](docs/diagrams/feedback-loop.excalidraw). Open either file
+in [Excalidraw](https://aka.ms/excalidraw).
+PNG downloads: [hierarchy](docs/diagrams/hierarchy.png) and
+[feedback loop](docs/diagrams/feedback-loop.png).
+
 Read [Evaluation and improvement](docs/EVALUATION.md) for the dataset, exact
 scoring and acceptance criteria, reflection algorithm, persistence guarantees,
 termination rules, limitations, and how this pattern translates to LLM agents.

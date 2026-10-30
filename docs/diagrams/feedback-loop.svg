@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1490" viewBox="0 0 1400 1490" role="img" aria-labelledby="title description">
+  <title id="title">Agent improvement demo: bounded feedback loop</title>
+  <desc id="description">Evaluate the current policy, check target and budget, reflect on failures, propose a permitted strategy, re-evaluate all selection cases, then accept only strict improvement without individual regressions. Rejections preserve the policy. Save history and repeat. Stop if the target is reached, the budget is spent, or no useful candidate exists.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#495057" stroke-width="2"/></marker>
+  </defs>
+  <rect x="0" y="0" width="1400" height="1490" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#000000">
+    <text x="50" y="64" font-size="32" font-weight="700">How feedback improves the next iteration</text>
+    <text x="50" y="108" font-size="22">Start with the default policy, or replay a checkpoint to resume the last accepted policy.</text>
+    <g fill="none" stroke="#495057" stroke-width="2" marker-end="url(#arrow)">
+      <polyline points="410,247 510,247"/>
+      <polyline points="890,247 990,247"/>
+      <polyline points="700,320 700,370 270,370 270,450"/>
+      <polyline points="460,530 520,530"/>
+      <polyline points="900,530 960,530"/>
+      <polyline points="380,450 380,400 1180,400 1180,320"/>
+      <polyline points="1060,640 1060,770"/>
+      <polyline points="1320,640 1320,1060 1270,1060"/>
+      <polyline points="870,850 700,850 700,1210"/>
+      <polyline points="870,1060 780,1060 780,1210"/>
+      <polyline points="510,1280 40,1280 40,247 90,247"/>
+    </g>
+    <text x="420" y="227" font-size="18">scores</text>
+    <text x="908" y="224" font-size="18">done</text>
+    <text x="300" y="360" font-size="19">continue: failures remain and budget available</text>
+    <text x="540" y="390" font-size="19">no useful untried candidate</text>
+    <text x="925" y="720" font-size="20">ACCEPT</text>
+    <text x="1225" y="720" font-size="20">REJECT</text>
+    <text x="90" y="1258" font-size="20">next iteration uses the accepted policy</text>
+    <g id="execute">
+      <rect x="90" y="170" width="320" height="150" rx="14" fill="#a5d8ff" stroke="#1864ab" stroke-width="2"/>
+      <text x="250" y="212" font-size="25" text-anchor="middle" font-weight="700">Execute + evaluate</text>
+      <text x="250" y="252" font-size="20" text-anchor="middle">Current policy predictions</text>
+      <text x="250" y="286" font-size="20" text-anchor="middle">8 development + 4 guard</text>
+    </g>
+    <g id="bounds">
+      <rect x="510" y="170" width="380" height="150" rx="14" fill="#fff3bf" stroke="#e67700" stroke-width="2"/>
+      <text x="700" y="212" font-size="25" text-anchor="middle" font-weight="700">Check target + budget</text>
+      <text x="700" y="252" font-size="20" text-anchor="middle">Perfect development score?</text>
+      <text x="700" y="286" font-size="20" text-anchor="middle">Total proposal budget spent?</text>
+    </g>
+    <g id="stop">
+      <rect x="990" y="170" width="380" height="150" rx="14" fill="#dee2e6" stroke="#495057" stroke-width="2"/>
+      <text x="1180" y="212" font-size="25" text-anchor="middle" font-weight="700">Stop + save reason</text>
+      <text x="1180" y="252" font-size="20" text-anchor="middle">target_reached / iteration_limit</text>
+      <text x="1180" y="286" font-size="20" text-anchor="middle">or no_candidate</text>
+    </g>
+    <g id="reflect">
+      <rect x="90" y="450" width="370" height="190" rx="14" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2"/>
+      <text x="275" y="492" font-size="25" text-anchor="middle" font-weight="700">Reflect + propose</text>
+      <text x="275" y="532" font-size="20" text-anchor="middle">Probe development failures only</text>
+      <text x="275" y="566" font-size="20" text-anchor="middle">Enable 1 allowlisted setting</text>
+      <text x="275" y="600" font-size="20" text-anchor="middle">Choose most repaired failures</text>
+    </g>
+    <g id="reevaluate">
+      <rect x="520" y="450" width="380" height="190" rx="14" fill="#a5d8ff" stroke="#1864ab" stroke-width="2"/>
+      <text x="710" y="492" font-size="25" text-anchor="middle" font-weight="700">Re-evaluate candidate</text>
+      <text x="710" y="532" font-size="20" text-anchor="middle">Execute all 12 selection cases</text>
+      <text x="710" y="566" font-size="20" text-anchor="middle">Same labels + scoring rules</text>
+      <text x="710" y="600" font-size="20" text-anchor="middle">Never rewrite the evaluator</text>
+    </g>
+    <g id="gate">
+      <rect x="960" y="450" width="410" height="190" rx="14" fill="#fff3bf" stroke="#e67700" stroke-width="2"/>
+      <text x="1165" y="492" font-size="25" text-anchor="middle" font-weight="700">Acceptance gate</text>
+      <text x="1165" y="532" font-size="20" text-anchor="middle">Development strictly improves</text>
+      <text x="1165" y="566" font-size="20" text-anchor="middle">AND no previously correct case</text>
+      <text x="1165" y="600" font-size="20" text-anchor="middle">regresses on either suite</text>
+    </g>
+    <g id="accept">
+      <rect x="870" y="770" width="400" height="160" rx="14" fill="#b2f2bb" stroke="#2f9e44" stroke-width="2"/>
+      <text x="1070" y="814" font-size="25" text-anchor="middle" font-weight="700">Adopt candidate policy</text>
+      <text x="1070" y="856" font-size="20" text-anchor="middle">Successful settings carry forward</text>
+      <text x="1070" y="894" font-size="20" text-anchor="middle">Next proposal builds on this</text>
+    </g>
+    <g id="reject">
+      <rect x="870" y="980" width="400" height="160" rx="14" fill="#fff3bf" stroke="#e67700" stroke-width="2"/>
+      <text x="1070" y="1024" font-size="25" text-anchor="middle" font-weight="700">Keep previous policy</text>
+      <text x="1070" y="1066" font-size="20" text-anchor="middle">Log rejection and reasons</text>
+      <text x="1070" y="1104" font-size="20" text-anchor="middle">Rejected proposal still uses budget</text>
+    </g>
+    <g id="checkpoint">
+      <rect x="510" y="1210" width="480" height="150" rx="14" fill="#f3d9fa" stroke="#862e9c" stroke-width="2"/>
+      <text x="750" y="1254" font-size="25" text-anchor="middle" font-weight="700">Checkpoint policy + history</text>
+      <text x="750" y="1296" font-size="20" text-anchor="middle">Atomic JSON write after each proposal</text>
+      <text x="750" y="1332" font-size="20" text-anchor="middle">Do not repeat attempted candidates</text>
+    </g>
+    <text x="50" y="1420" font-size="21">Measured fresh run: development 4/8 -&gt; 5/8 -&gt; 7/8 -&gt; 8/8; guard stays 4/4.</text>
+    <text x="50" y="1460" font-size="21">Only policy settings improve. No LLM calls, model-weight updates, or generated-code execution.</text>
+  </g>
+</svg>

@@ -1,5 +1,20 @@
 # Evaluation and improvement
 
+## Visual guide
+
+The [implementation hierarchy](diagrams/hierarchy.svg) shows the CLI/controller
+and its routing, evaluation, and persistence dependencies. The
+[feedback-loop diagram](diagrams/feedback-loop.svg) shows how a candidate passes
+through reflection, re-evaluation, acceptance/rejection, and checkpointing.
+Both are embedded in the [README](../README.md).
+
+Editable Excalidraw sources are saved alongside the previews:
+[hierarchy](diagrams/hierarchy.excalidraw) and
+[feedback loop](diagrams/feedback-loop.excalidraw). They depict this deterministic
+implementation, not a hierarchy of autonomous LLM agents. The hierarchy arrows
+mean "calls/uses"; the feedback arrows show control and policy flow. The audit
+is a CLI reporting step after the loop, not an acceptance signal.
+
 ## What this demo actually improves
 
 The agent is an ordinary deterministic support-ticket router. Given text, it
