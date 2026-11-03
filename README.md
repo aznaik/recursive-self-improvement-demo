@@ -12,6 +12,19 @@ initial strategy makes real mistakes; feedback selects changes to case handling,
 word matching, and routing priority. Accepted changes affect the next iteration.
 Scores are computed from predictions, not generated from an iteration counter.
 
+## Presentation and narrated demo
+
+| Deliverable | Contents |
+|---|---|
+| [PowerPoint presentation](docs/media/recursive-improvement-demo.pptx) | 12 editable slides with speaker notes, architecture, examples, and measured results |
+| [Presentation PDF](docs/media/recursive-improvement-demo.pdf) | Slide preview for viewing without PowerPoint |
+| [Narrated video](docs/media/rsi-agent-demo.mp4) | 1 minute 40 seconds, with English voiceover and captions |
+
+See the [media guide](docs/media/DEMO-NOTES.md) for run provenance and limitations.
+The presentation distinguishes this bounded strategy-optimization demo from
+stronger recursive self-improvement; it does not claim open-ended knowledge
+discovery, model-weight training, or ASI.
+
 ## Run
 
 Requires **Python 3.10+**, with no third-party dependencies, API keys, or network
@@ -55,6 +68,29 @@ never silently reset. Stop reasons are `target_reached`, `iteration_limit`, and
 policy.
 
 ## How evaluation and improvement work
+
+### Implementation hierarchy
+
+![Hierarchy of the deterministic improvement controller, routing agent, fixed evaluator, and checkpoint persistence](docs/diagrams/hierarchy.svg)
+
+The CLI calls one controller, which uses the routing agent, evaluator, and local
+checkpoint helpers. These are Python modules/functions, not separate LLM agents.
+The evaluator owns the labels and scoring; only allowlisted policy settings change.
+
+### Iteration and feedback
+
+![Bounded feedback loop from execution and evaluation through reflection, candidate validation, acceptance or rejection, and persistence](docs/diagrams/feedback-loop.svg)
+
+Each accepted strategy becomes the starting point for the next proposal.
+Rejections keep the previous strategy but still consume the proposal budget.
+The loop stops on a perfect development score, the total budget, or no useful
+untried candidate. The separate audit reports results without selecting changes.
+
+Editable diagrams: [hierarchy source](docs/diagrams/hierarchy.excalidraw) and
+[feedback-loop source](docs/diagrams/feedback-loop.excalidraw). Open either file
+in [Excalidraw](https://aka.ms/excalidraw).
+PNG downloads: [hierarchy](docs/diagrams/hierarchy.png) and
+[feedback loop](docs/diagrams/feedback-loop.png).
 
 Read [Evaluation and improvement](docs/EVALUATION.md) for the dataset, exact
 scoring and acceptance criteria, reflection algorithm, persistence guarantees,
