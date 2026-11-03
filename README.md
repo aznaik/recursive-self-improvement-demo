@@ -12,6 +12,19 @@ initial strategy makes real mistakes; feedback selects changes to case handling,
 word matching, and routing priority. Accepted changes affect the next iteration.
 Scores are computed from predictions, not generated from an iteration counter.
 
+## Presentation and narrated demo
+
+| Deliverable | Contents |
+|---|---|
+| [PowerPoint presentation](docs/media/recursive-improvement-demo.pptx) | 12 editable slides with speaker notes, architecture, examples, and measured results |
+| [Presentation PDF](docs/media/recursive-improvement-demo.pdf) | Slide preview for viewing without PowerPoint |
+| [Narrated video](docs/media/rsi-agent-demo.mp4) | 1 minute 40 seconds, with English voiceover and captions |
+
+See the [media guide](docs/media/DEMO-NOTES.md) for run provenance and limitations.
+The presentation distinguishes this bounded strategy-optimization demo from
+stronger recursive self-improvement; it does not claim open-ended knowledge
+discovery, model-weight training, or ASI.
+
 ## Run
 
 Requires **Python 3.10+**, with no third-party dependencies, API keys, or network
